@@ -1,7 +1,13 @@
+<script setup lang="ts">
+import DxButton from 'devextreme-vue/button';
+
+function sayHelloWorld() {
+  alert('Hello world!')
+}
+</script>
+
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <DxButton text="Click me" @click="sayHelloWorld" />
 </template>
 
 <style>
