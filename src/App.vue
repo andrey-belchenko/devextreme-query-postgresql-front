@@ -1,22 +1,58 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView, useRouter } from 'vue-router'
+import DxToolbar, { DxItem } from 'devextreme-vue/toolbar';
+
+const router = useRouter();
+
+const gridButtonOptions = {
+  text: 'Grid',
+  onClick: () => {
+    router.push('/grid');
+  },
+};
+
+const treeButtonOptions = {
+  text: 'Tree',
+  onClick: () => {
+    router.push('/tree');
+  },
+};
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <div :class="$style.main">
+    <div :class="$style.toolbar">
+      <DxToolbar>
+        <DxItem :options="gridButtonOptions" location="before" widget="dxButton" />
+        <DxItem :options="treeButtonOptions" location="before" widget="dxButton" />
+      </DxToolbar>
     </div>
-  </header>
-
-  <RouterView />
+    <div :class="$style.content">
+      <RouterView />
+    </div>
+  </div>
 </template>
 
-<style scoped>
+<style module>
+.main {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  margin: 0px 10px 0px 10px;
+}
+
+.content {
+  flex: 1;
+  position: relative;
+  margin: 0px 10px 10px 10px;
+}
+</style>
+
+<!-- <style scoped>
 header {
   line-height: 1.5;
   max-height: 100vh;
@@ -78,4 +114,4 @@ nav a:first-of-type {
     margin-top: 1rem;
   }
 }
-</style>
+</style> -->
