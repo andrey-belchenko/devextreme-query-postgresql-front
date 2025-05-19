@@ -63,29 +63,13 @@ const columns: any[] = [
   }
 ];
 
-// const options = {
-//   method: 'POST',
-//   headers: {'Content-Type': 'application/json', 'User-Agent': 'insomnia/11.1.0'},
-//   body: '{}'
-// };
-
-// fetch('http://localhost:3000/sales', options)
-//   .then(response => response.json())
-//   .then(response => console.log(response))
-//   .catch(err => console.error(err));
 
 const dataSource = new CustomStore({
   key: "sale_id",
   load: async (loadOptions) => {
-    const options = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: '{}'
-    };
-
     const response = await fetch("http://localhost:3000/sales", {
       method: "POST",
-      body: JSON.stringify({}),
+      body: JSON.stringify({ loadOptions }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -104,9 +88,10 @@ const dataSource = new CustomStore({
   <div :class="$style.grid">
     <DxDataGrid :columns="columns" :data-source="dataSource" :show-borders="false" :focused-row-enabled="true"
       :default-focused-row-index="0" :column-auto-width="true" :column-hiding-enabled="false" :show-column-lines="true"
-      :show-row-lines="true" :hover-state-enabled="true" :allow-column-resizing="true" column-resizing-mode="widget">
-      <!-- <DxRemoteOperations :filtering="true" :sorting="true" :group-paging="true" :summary="true" :grouping="true">
-      </DxRemoteOperations> -->
+      :sorting="{ mode: 'multiple' }" :show-row-lines="true" :hover-state-enabled="true" :allow-column-resizing="true"
+      column-resizing-mode="widget">
+      <DxRemoteOperations :filtering="true" :sorting="true" :group-paging="true" :summary="true" :grouping="true">
+      </DxRemoteOperations>
       <DxPaging :enabled="false" />
       <DxFilterRow :visible="true" />
       <DxScrolling :useNative="true" mode="virtual" />
@@ -114,7 +99,6 @@ const dataSource = new CustomStore({
       <DxFilterPanel :visible="true" />
       <DxGroupPanel :visible="true" />
       <DxGrouping :auto-expand-all="true" />
-      <DxExport :enabled="true" :allow-export-selected-data="false" />
       <DxSelection mode="single" />
     </DxDataGrid>
   </div>
